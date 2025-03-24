@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>welcome back asahlak</title>
+    <title>welcome back</title>
     <style>
         body {
             margin: 0;
@@ -12,9 +12,8 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url('اسهلك.png') no-repeat center center/cover;
+            background: url('/mnt/data/اسهلك.png') no-repeat center center/cover;
             text-align: center;
-            transition: background 0.3s;
         }
         .overlay {
             position: absolute;
@@ -25,10 +24,11 @@
         .container {
             position: relative;
             z-index: 1;
-            background: rgba(44, 62, 72, 0.9);
+            background: #2C3E48; /* اللون المستخرج من الصورة */
             padding: 30px;
             border-radius: 10px;
             text-align: center;
+            transition: background 0.3s;
             width: 90%;
             max-width: 400px;
             color: white;
@@ -41,29 +41,29 @@
             font-size: 20px;
             margin-bottom: 15px;
         }
-        input, button {
-            width: 100%;
+        input {
+            display: block;
+            width: 90%;
             margin: 8px 0;
-            padding: 10px;
+            padding: 6px;
             border: none;
             border-radius: 5px;
             font-size: 14px;
             text-align: center;
         }
-        input {
-            background: #f8f8f8;
-        }
         button {
-            background: #007bff;
-            color: white;
+            display: block;
+            width: 90%;
+            margin: 10px 0;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
             font-size: 16px;
+            text-align: center;
             cursor: pointer;
         }
-        button:hover {
-            background: #0056b3;
-        }
-        .dark-mode {
-            background: black !important;
+        .dark-mode .container {
+            background: black; /* تغيير الخلفية إلى الأسود عند تفعيل الوضع المظلم */
             color: white;
         }
         .toggle-mode {
@@ -71,70 +71,53 @@
             top: 10px;
             right: 10px;
             cursor: pointer;
-            padding: 8px 12px;
+            padding: 10px;
             background: gray;
             color: white;
             border-radius: 5px;
             font-size: 14px;
-            transition: 0.3s;
         }
-        .toggle-mode:hover {
+        .container .toggle-mode {
+            position: absolute;
+            top: 10px;
+            right: 10px;
             background: black;
+            color: white;
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="overlay"></div>
-    <div class="container" id="step1">
+    <div class="container">
         <div class="toggle-mode" onclick="toggleMode()">تغيير الوضع</div>
-        <h2>مرحبًا بك!</h2>
+        <h2>Welcome</h2>
         <input type="text" id="firstName" placeholder="الاسم الأول">
         <input type="text" id="lastName" placeholder="الاسم الثاني">
         <input type="text" id="phone" placeholder="رقم التواصل">
-        <button onclick="nextStep()">دخول</button>
+        <button onclick="submitForm()">دخول</button>
     </div>
-    
-    <div class="container" id="step2" style="display: none;">
-        <h2>تم تسجيل الدخول بنجاح</h2>
-        <p>مرحبًا بك في الصفحة الثانية</p>
-        <button onclick="goToMainPage()">الصفحة الرئيسية</button>
-    </div>  
-    
+
     <script>
         function toggleMode() {
             document.body.classList.toggle("dark-mode");
         }
-
-        function nextStep() {
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-
+        function submitForm() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const phone = document.getElementById('phone').value;
+            
             if (!firstName || !lastName || !phone) {
                 alert("يجب ملء جميع الحقول قبل الدخول.");
                 return;
             }
             
-            sendEmail(firstName, lastName, phone);
-            document.getElementById('step1').style.display = 'none';
-            document.getElementById('step2').style.display = 'block';
-        }
-
-        function goToMainPage() {
-            window.location.href = "https://sites.google.com/view/asahlak/%D8%A7%D9%84%D8%B5%D9%81%D8%AD%D9%87-%D8%A7%D9%84%D8%B1%D8%A6%D9%8A%D8%B3%D9%87";
-        }
-
-        function sendEmail(firstName, lastName, phone) {
-            let formData = new FormData();
-            formData.append("firstName", firstName);
-            formData.append("lastName", lastName);
-            formData.append("phone", phone);
+            const mailtoLink = `mailto:zomatube2011@gmail.com?subject=تسجيل%20جديد&body=الاسم%20الأول:%20${firstName}%0A
+            window.location.href = mailtoLink;الاسم%20الثاني:%20${lastName}%0Aرقم%20التواصل:%20${phone}`;
             
-            fetch("send_email.php", {
-                method: "POST",
-                body: formData
-            }).then(response => response.text())
-            .then(data => console.log(data));
+            window.location.href = "https://sites.google.com/view/asahlak/%D8%A7%D9%84%D8%B5%D9%81%D8%AD%D9%87-%D8%A7%D9%84%D8%B1%D8%A6%D9%8A%D8%B3%D9%87";
         }
     </script>
 </body>
