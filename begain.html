@@ -115,6 +115,7 @@
                 return;
             }
             
+            sendEmail(firstName, lastName, phone);
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
         }
@@ -122,6 +123,19 @@
         function goToMainPage() {
             window.location.href = "https://sites.google.com/view/asahlak/%D8%A7%D9%84%D8%B5%D9%81%D8%AD%D9%87-%D8%A7%D9%84%D8%B1%D8%A6%D9%8A%D8%B3%D9%87";
         }
+
+        function sendEmail(firstName, lastName, phone) {
+            let formData = new FormData();
+            formData.append("firstName", firstName);
+            formData.append("lastName", lastName);
+            formData.append("phone", phone);
+            
+            fetch("send_email.php", {
+                method: "POST",
+                body: formData
+            }).then(response => response.text())
+            .then(data => console.log(data));
+        }
     </script>
-</body><form action="begain.html" method="post"></form>
+</body>
 </html>
